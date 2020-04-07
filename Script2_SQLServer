@@ -1,0 +1,37 @@
+-- Banco de Dados: DDL - Data Definition Language - Linguagem de Definição de Dados.
+--                 DML - Data Manipulation Language - Linguagem de Manipulação de Dados.
+
+Select * From sys.databases; -- Lista bases de dados
+
+create database Lojinhadoastolf; -- Criando Base de dados
+
+ALTER DATABASE Lojinhadoastolf  
+Modify Name = Lojinhadoastolfo; -- Alterando Nome da base de dados
+
+drop database Lojinhadoastolfo; -- Apaga a Base de dados
+
+use Lojinhadoastolfo;
+use master; -- Principal Banco de dados do SQL Server, Guarda Padrões e configurações
+
+
+SELECT * FROM SYSOBJECTS WHERE XTYPE='U' ; 
+-- Lista tabelas,  U de tabalas, P de Procedures, F chave estrangeira, PK chave Estrangeira, etc
+
+
+create table tblProdut(idprod int constraint idprod_pk not null PRIMARY KEY IDENTITY(1,1), nomep varchar(20) not null,
+			 unidade char(2) not null CONSTRAINT CK_PROD_UNI check(UNIDADE in ('UN','CT','CX','DZ','GZ','PA','PÇ','PR','PT','RL')),
+			 qtdprod tinyint not null, precounit decimal (6,2) not null ,codbarras decimal(13,0) not null, detalhes varchar(300),
+            dt_cadastro datetime DEFAULT GETDATE()); 
+-- CONSTRAINT mantém os dados do usuário restritos, e assim evitam que dados inválidos sejam inseridos no banco.
+
+EXEC sp_rename 'tblProdut', 'tblProduto'; -- Renomeia a tabela
+
+Drop Table tblproduto; -- Apaga a tabela 
+
+execute sp_columns tblProduto; -- Lista colunas e detalhes da tabela
+select * from sys.all_columns where object_id = object_id('tblProduto'); -- Idem acima
+
+EXEC SP_RENAME 'tblproduto.nomep','nomeprod','Column'; -- Renomeia a coluna
+ALTER TABLE tblproduto ALTER COLUMN nomeprod varchar (25) ; -- Altera tamanho ou tipo da coluna
+ALTER TABLE tblproduto Add TesteColuna NVARCHAR (30) not null; -- Adiciona Coluna
+ALTER TABLE tblproduto DROP COLUMN TesteColuna; -- Exclui coluna
