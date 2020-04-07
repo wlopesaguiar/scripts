@@ -1,4 +1,4 @@
--- Operações e Váriáveis Mysql
+-- Operações e Váriáveis Mysql - Tipagem dinâmica
 
 SELECT 1+2;
 set @i:= 1;
